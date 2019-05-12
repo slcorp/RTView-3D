@@ -6,6 +6,8 @@ RTView is a real-time data management, visualization and analytics engine provid
 
 In such applications, it is often most effective to present real-time dynamic data in a 3-dimensional representation. For example, a satellite telemetry feed containing information about the orientation of its solar panels might best be visualized using a 3D rendering of the solar panels rotated in real-time as the data change. This and many other similar displays can readily be created and published to users using the tools avaialble with RTView.
 
+![](assets/images/sample-car-3d.png)
+
 Three.js is widely used 3D rendering library, with substantial functionaltiy, specifically designed for use in HTML brower applcations. With it one can programmatically create and render complex dynamic 3D models, as well as import models created with other tools such as AutoCAD, Blender, Maya, and others. This RTView GitHub repository shows how to use Three.js to render models within the context of RTView and manipulate them with real-time data accessed from a variety of datasources provided by RTView.
 
 In addition, displays containing 3D representations can be combinded with other types of real-time displays, charts, tables, diagrams, and more, to create complete dashboard applications for monitoring and controlling complex applications or processes.
