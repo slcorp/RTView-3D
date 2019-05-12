@@ -4,6 +4,20 @@ This repository provides information and examples that show how to render and im
 
 RTView is a real-time data management, visualization and analytics engine provided by SL Corporation (www.sl.com). It is used by organizations worldwide as a key component of mission-critical monitoring and control systems built around various middleware, infrastructure, telemetry and IoT data sources.
 
+In such applications, it is often most effective to present real-time dynamic data in a 3-dimensional representation. For example, a satellite telemetry feed containing information about the orientation of its solar panels might best be visualized using a 3D rendering of the solar panels rotated in real-time as the data change. This and many other similar displays can readily be created and published to users using the tools avaialble with RTView.
+
+![](assets/images/sample-car-3d.png)
+
+Three.js is widely used 3D rendering library, with substantial functionaltiy, specifically designed for use in HTML brower applcations. With it one can programmatically create and render complex dynamic 3D models, as well as import models created with other tools such as AutoCAD, Blender, Maya, and others. This RTView GitHub repository shows how to use Three.js to render models within the context of RTView and manipulate them with real-time data accessed from a variety of datasources provided by RTView.
+
+In addition, displays containing 3D representations can be combinded with other types of real-time displays, charts, tables, diagrams, and more, to create complete dashboard applications for monitoring and controlling complex applications or processes.
+
+By following the steps described below you will:
+
+* Create an account on RTView Cloud.
+* Upload a set of sample 3D model files to your RTView Cloud account.
+* Create, deploy, and publish displays that drive these sample models with real-time data.
+* Learn how to create your own 3D models and extend RTView in new ways.
 
 ## Create an RTView Cloud account
 An RTView Cloud account provides the tools for creating, viewing and publishing rich graphical displays connected to real-time data sources.
@@ -24,8 +38,9 @@ On the RTView Cloud top menu bar, open the Settings menu (select the 'gear' icon
 Choose the Assets option.
 Select 'Create Directory' and enter 'html' to create a folder to hold your HTML assets (skip if it exists).
 Select the 'html' folder.
-Choose 'Add File', navigate to the 'assets/html' folder in this github repo, and select one or more html snippets to upload.
-Select 'Open' to initiate the opload process. 
+Choose 'Add File', navigate to the 'assets/html' folder in this github repo,
+    and select one or all of the html snippets to upload.
+Select 'Open' to initiate the upload process. 
 ```
 
 ## Import and view the sample displays
