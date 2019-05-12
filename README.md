@@ -8,7 +8,7 @@ In such applications, it is often most effective to present real-time dynamic da
 
 ![](assets/images/sample-car-3d.png)
 
-Three.js is widely used 3D rendering library, with substantial functionality, specifically designed for use in HTML browser applcations. With it one can create and render complex dynamic 3D models, as well as import models created with other tools such as AutoCAD, Blender, Maya, and others. This RTView GitHub repository shows how to use Three.js to render models within the context of RTView and manipulate them with real-time data accessed from a variety of datasources provided by RTView.
+[Three.js](https://threejs.org/) is widely used 3D Javascript rendering library, specifically designed for use in HTML browser applcations. With it one can create and render complex dynamic 3D models, as well as import models created with tools such as AutoCAD, Blender, Maya, and others. This repository shows how to use Three.js to render models within the context of RTView and manipulate them with real-time data accessed from datasources provided by RTView.
 
 In addition, displays containing 3D representations can be combined with other real-time displays such as charts, tables, diagrams, and more, to create complete dashboard applications for monitoring and controlling complex applications or processes.
 
