@@ -18,17 +18,17 @@ Note that you are automatically placed into your own private organization (e.g. 
 
 * In a browser, go to [RTView Cloud](http://rtviewcloud.sl.com/).
 
-* Upload the sample 3D models to an RTView Cloud Assets folder. 
+* Upload the sample 3D models to an RTView Cloud Assets folder: 
 ```
 On the RTView Cloud top menu bar, open the Settings menu (select the 'gear' icon).
-Choose the Aseets option.
-Select 'Create Directory' and enter 'html' to make a directory to hold your HTML assets (skip if it exists).
-Select the 'html' directory.
-Choose 'Add File', navigate to the 'html' folder in this repo and select the assets you'd like to upload.
-Select 'Open' to start the opload process. 
+Choose the Assets option.
+Select 'Create Directory' and enter 'html' to create a folder to hold your HTML assets (skip if it exists).
+Select the 'html' folder.
+Choose 'Add File', navigate to the 'html' folder in this github repo and select the assets you'd like to upload.
+Select 'Open' to initiate the opload process. 
 ```
 
-## Import and view the sample display
+## Import and view the sample displays
 
 * In a browser, go to [RTView Cloud](http://rtviewcloud.sl.com/).
 
