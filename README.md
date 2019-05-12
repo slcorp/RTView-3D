@@ -24,7 +24,7 @@ On the RTView Cloud top menu bar, open the Settings menu (select the 'gear' icon
 Choose the Assets option.
 Select 'Create Directory' and enter 'html' to create a folder to hold your HTML assets (skip if it exists).
 Select the 'html' folder.
-Choose 'Add File', navigate to the 'html' folder in this github repo and select the assets you'd like to upload.
+Choose 'Add File', navigate to the 'assets/html' folder in this github repo, and select one or more html snippets to upload.
 Select 'Open' to initiate the opload process. 
 ```
 
