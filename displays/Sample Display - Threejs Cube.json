@@ -1,0 +1,402 @@
+{
+    "modifiedDate": "2019-05-13T03:19:04.827Z",
+    "viewport": {
+        "x": 0,
+        "y": 0,
+        "scale": 1
+    },
+    "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 600,
+        "resizable": false
+    },
+    "localVars": {
+        "enableControls": "0",
+        "pitch": "0",
+        "roll": "0",
+        "yaw": "3",
+        "showGround": "1"
+    },
+    "styleSheet": {},
+    "bgColor": "#ffffff",
+    "layout": "",
+    "version": "1.61.0",
+    "nodeDataArray": [
+        {
+            "key": -20,
+            "size": "600 42",
+            "category": "General",
+            "bgBorderRadius": 0,
+            "bgVisible": true,
+            "bgColor": {
+                "start": "#f5f5f5",
+                "end": "#e7e7e7"
+            },
+            "pos": "390 550.5",
+            "bgBorderVisible": true,
+            "bgBorderColor": "#cccccc",
+            "bgBorderWidth": 1
+        },
+        {
+            "key": 14,
+            "size": "600 100",
+            "category": "General",
+            "bgBorderRadius": 0,
+            "bgVisible": true,
+            "bgColor": {
+                "start": "#f5f5f5",
+                "end": "#e7e7e7"
+            },
+            "pos": "390 480",
+            "bgBorderVisible": true,
+            "bgBorderColor": "#cccccc",
+            "bgBorderWidth": 1
+        },
+        {
+            "key": 31,
+            "category": "extern-html-object",
+            "bgVisible": true,
+            "size": "600 352",
+            "rowSeriesFlag": false,
+            "pos": "390 250",
+            "bgBorderVisible": true,
+            "bgBorderColor": "#cccccc",
+            "bgBorderWidth": 1,
+            "bgBorderRadius": 0,
+            "dispName": "http://localhost:6565/assets/html/threejs_cube2.html",
+            "localVars": {
+                "pitch": 0,
+                "roll": 0,
+                "yaw": 1,
+                "enableControl": true,
+                "showGround": true
+            },
+            "bindings": {
+                "localVars.pitch": {
+                    "name": "pitch",
+                    "type": "variable"
+                },
+                "localVars.roll": {
+                    "name": "roll",
+                    "type": "variable"
+                },
+                "localVars.yaw": {
+                    "name": "yaw",
+                    "type": "variable"
+                },
+                "localVars.enableControl": {
+                    "name": "enableControls",
+                    "type": "variable"
+                },
+                "localVars.showGround": {
+                    "name": "showGround",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": 22,
+            "category": "extern-ctrl",
+            "size": "100 30",
+            "dispName": "input",
+            "localVars": {
+                "varToSet": ""
+            },
+            "pos": "200 460",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "yaw",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": 1,
+            "size": "24.94 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Yaw",
+            "labelAlignment": {
+                "horizontal": "InsideRight",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "150 458"
+        },
+        {
+            "key": -5,
+            "category": "extern-ctrl",
+            "size": "100 30",
+            "dispName": "input",
+            "localVars": {
+                "varToSet": ""
+            },
+            "pos": "390 460",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "pitch",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -4,
+            "size": "29.63 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Pitch",
+            "labelAlignment": {
+                "horizontal": "InsideRight",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "340 458"
+        },
+        {
+            "key": -7,
+            "category": "extern-ctrl",
+            "size": "100 30",
+            "dispName": "input",
+            "localVars": {
+                "varToSet": ""
+            },
+            "pos": "580 460",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "roll",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -6,
+            "size": "22.96 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Roll",
+            "labelAlignment": {
+                "horizontal": "InsideRight",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "530 458"
+        },
+        {
+            "key": 23,
+            "category": "extern-ctrl",
+            "size": "30 30",
+            "dispName": "checkbox",
+            "localVars": {
+                "valueToSetChecked": 3,
+                "valueToSetUnchecked": 0,
+                "varToSet": ""
+            },
+            "pos": "160 500",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "yaw",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -9,
+            "size": "107.57 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Set Yaw = 3 deg/s",
+            "labelAlignment": {
+                "horizontal": "InsideLeft",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "170 500"
+        },
+        {
+            "key": -11,
+            "category": "extern-ctrl",
+            "size": "30 30",
+            "dispName": "checkbox",
+            "localVars": {
+                "valueToSetChecked": 3,
+                "valueToSetUnchecked": 0,
+                "varToSet": ""
+            },
+            "pos": "350 500",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "pitch",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -10,
+            "size": "112.26 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Set Pitch = 3 deg/s",
+            "labelAlignment": {
+                "horizontal": "InsideLeft",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "360 500"
+        },
+        {
+            "key": -13,
+            "category": "extern-ctrl",
+            "size": "30 30",
+            "dispName": "checkbox",
+            "localVars": {
+                "valueToSetChecked": 3,
+                "valueToSetUnchecked": 0,
+                "varToSet": ""
+            },
+            "pos": "540 500",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "roll",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -12,
+            "size": "105.59 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Set Roll = 3 deg/s",
+            "labelAlignment": {
+                "horizontal": "InsideLeft",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "550 500"
+        },
+        {
+            "key": -14,
+            "size": "350.53 30.21",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Sample Display - threejs_cube instance",
+            "labelAlignment": {
+                "horizontal": "Center",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal bold 14pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "400 50",
+            "labelColor": "#4c4c4c"
+        },
+        {
+            "key": -17,
+            "size": "94.85 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Enable Controls",
+            "labelAlignment": {
+                "horizontal": "InsideLeft",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "230 550"
+        },
+        {
+            "key": -16,
+            "category": "extern-ctrl",
+            "size": "30 30",
+            "dispName": "checkbox",
+            "localVars": {
+                "valueToSetChecked": 1,
+                "valueToSetUnchecked": 0,
+                "varToSet": ""
+            },
+            "pos": "220 550",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "enableControls",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -19,
+            "size": "81.51 24.44",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Show Ground",
+            "labelAlignment": {
+                "horizontal": "InsideLeft",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 10pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "410 550"
+        },
+        {
+            "key": -18,
+            "category": "extern-ctrl",
+            "size": "30 30",
+            "dispName": "checkbox",
+            "localVars": {
+                "valueToSetChecked": 1,
+                "valueToSetUnchecked": 0,
+                "varToSet": ""
+            },
+            "pos": "400 550",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "showGround",
+                    "type": "variable"
+                }
+            }
+        }
+    ],
+    "linkDataArray": []
+}
