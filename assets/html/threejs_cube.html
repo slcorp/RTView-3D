@@ -1,173 +1,316 @@
 <!--- RTView HTML Snippet: ThreeJS Cube Example -->
-<!-- 
-TODO: 
-*** Wait for initial load to complete, to avoid failure on first render
-*** Implement resize so drawing area tracks resize
-*** Reload causes warning: three.min.js:188 WARNING: Too many active WebGL contexts. Oldest context will be lost.
-*** After selection, context is lost, seems to create whole new object which then does not render
-*** Find way to add transparency, alpha not working
--->
-<script src="http://threejs.org/build/three.min.js"></script>
 
-<canvas id="theCanvas" data-type="threejs-cube" data-height="480" data-width="480"></canvas>
+<div data-rtvid="theCanvas">
+<canvas id="theRealCanvas" data-type="threejs-cube2" data-height="480" data-width="480"></canvas>
+</div>
 
 <script>
 
-(function() {
-	var gauge = document.getElementById('theCanvas')
-    console.log('... found gauge: ' + gauge.id);
-	gauge.id = rtv.ui.getUniqueId();
-    console.log('... new id: ' + gauge.id);
-	gauge.rtvPanel = rtvPanel;
-	gauge.rtvDiagramContext = rtvPanel.parentPanel;
-	rtvPanel.gauge = gauge;
+// js vars used by functions within this scope
+var gyroCanvas, scene, camera, renderer, animator;
+var wrapper, box;
+var ground, grid, controls; 
 
-	var gaugeConfig = {
-        bgColor: '#eeeeee',
-       
-		value: 65
-	};
-	gauge.config = gaugeConfig;
-    
-    console.log('... about to do threejs stuff');
-    
-    // set initial width; but sometimes it starts out as 0
-    var width = rtvPanel.container.offsetWidth - 2;
-    if (width < 0) width = 0;
-    var height = rtvPanel.container.offsetHeight - 2;
-    if (height < 0) height = 0;
-    console.log('initial panel size = ' + width + ' x ' + height);
-    
-    var scene = new THREE.Scene();
-    scene.background = new THREE.Color( gauge.config.bgColor );
-       
-    var camera = new THREE.PerspectiveCamera( 75, width / height, 0.1, 1000 );
-    camera.position.x = 0;
-    camera.position.z = 5;
-    
-        //LIGHTS
-    var light = new THREE.AmbientLight(0x0ffffff, 0.8);
-    scene.add(light);
+var threeJsObjects = [];
 
-    var light2 = new THREE.PointLight(0xffffff, 0.8);
-    light2.position.x = 0;
-    light2.position.y = 8;
-    light2.position.z = 4;
-    scene.add(light2);
-    
-    var container = document.getElementById('theCanvas')
-    container = gauge;
-    //renderer = new THREE.WebGLRenderer( { canvas: gauge, alpha: true } );
-    renderer = new THREE.WebGLRenderer( { canvas: gauge } );
-    
-    // neither of these seems to work to provide tranparency
-    //renderer.setClearColor( '#eeddcc', 0.5 );
-    //renderer.setClearAlpha( 0.5 );
-    //renderer.shadowMap.enabled = true;
-    //renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    
-    renderer.setSize( width, height );
-    
-    //container.appendChild( renderer.domElement );
-    
-    var geometry = new THREE.BoxGeometry( 2, 2, 2 );
-    //var material = new THREE.MeshBasicMaterial( { color: 0x35638b } );
-    var material = new THREE.MeshLambertMaterial( { color: 0x00d8dd } )
-    var cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
-    
-    console.log('... rendering');
-    
-    var animate = function () {
-        requestAnimationFrame( animate );
+// Instance variables exposed to user
+var gyroConfig = {
+	bgColor: '#eeeeee',   
+	yaw: 1,
+	pitch: 0,
+	roll: 0,   
+    showGround: true,
+    enableControl: false
+};
+const verbose = false;
 
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.02;
-        cube.rotation.z += 0.03;
-
-        //console.log('... rendering 2');
-        renderer.render( scene, camera );
-        
-    };
-
-    animate();
-            
-
-	function applyVarToGauge (gauge, name, value) {
-        function toDash(strCamel){
-	        return strCamel.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();});
-        };
-        if (name == 'bgColor') {
-            scene.background = new THREE.Color( value );
-            renderer.render( scene, camera );
-            
-		}else if (name == "dataHighlights" && typeof value != "string") 
-			try {value = JSON.stringify(value);} catch(e) {console.error(e);}
-		else if (value && value.isDataTable)
-			value = rtv.dac.tableToScalar(value);
-		gauge.setAttribute(toDash(name), value);
-        //console.log("rgauge: "+toDash(name)+"="+value);
+// log
+function trace (msg) {
+	if (verbose) {
+		console.log(msg);
 	}
+}
 
-	function applyVarsToGauge(rtvPanel) {
-		if(rtvPanel.gauge !== undefined) {
-			Object.keys(rtvPanel.gauge.config).forEach(function(key){
-				applyVarToGauge(rtvPanel.gauge, key, rtvPanel.getVarValue(key));
-			});
-            //console.log("vars applied to r-gauge");
-		} else {
-			console.log("apply vars - myGauge not defined");
-		}
+// keep list of 3js objects, for cleanup
+function add3js (obj) {
+	threeJsObjects.push(obj);
+	return obj;
+}
+
+function getDimsForCanvas () {
+	return {
+		width: Math.max(rtvPanel.container.offsetWidth - 2, 1),
+		height: Math.max(rtvPanel.container.offsetHeight - 2, 1)
 	}
+}
 
+// make the 3js gyro object 
+function makeGyro () {
 
-	rtvPanel.setDisplayProperties({
-		localVars: gaugeConfig
-	});
-    applyVarsToGauge(rtvPanel);  // apply initial var values
-    setTimeout(function(){applyVarsToGauge(rtvPanel)}, 10);
+    gyroCanvas = rtvPanel.getElementByRtvId('theCanvas');
 	
+	scene = add3js(new THREE.Scene());
+	scene.background = add3js(new THREE.Color( gyroConfig.bgColor ));
+	
+	var dims = getDimsForCanvas();
+	camera = add3js(new THREE.PerspectiveCamera( 75, dims.width / dims.height, 0.1, 1000 ));
+	camera.position.x = -4;
+	camera.position.y = 4;
+	camera.position.z = 2;
+	
+	camera.lookAt( add3js(new THREE.Vector3(0, 0, 0) ));
+	
+		//LIGHTS
+	var light = add3js(new THREE.AmbientLight(0x0ffffff, 0.8));
+	scene.add(light);
+
+	var light2 = add3js(new THREE.DirectionalLight(0xffffff, 0.8));
+	light2.position.set(-6, 16, 12);
+    light2.castShadow = true;
+    light2.shadow.camera.top = 18;
+    light2.shadow.camera.bottom = - 10;
+    light2.shadow.camera.left = - 12;
+    light2.shadow.camera.right = 12;
+    
+    // increase size of shadow map for better shadows
+    light2.angle = Math.PI / 8.0;
+    light2.shadow.mapSize.width = 2048;
+    light2.shadow.mapSize.height = 2048;
+  
+	scene.add(light2);
+	
+    // create renderer with correct dimensions and attach to canvas
+    renderer = add3js(new THREE.WebGLRenderer( { canvas: gyroCanvas.children[0] } ));
+	renderer.setSize( dims.width, dims.height ); 
+    renderer.shadowMap.enabled = true;    
+    gyroCanvas.appendChild( renderer.domElement );
+    
+    // install Orbit Controls if enabled
+    enableOrbitControls(gyroConfig.enableControl);
+
+    // ground plane for shadow if visible
+    setGroundPlaneVis(gyroConfig.showGround);
+	
+	wrapper = add3js(new THREE.Object3D());
+	wrapper.rotation.x = -(Math.PI / 2);
+	scene.add( wrapper );
+	
+	// Create a set of axes so we can get oriented
+	var axesHelper = add3js(new THREE.AxesHelper( 5 ));
+	wrapper.add( axesHelper );
+	   
+	// Create the gyro 'box'
+    makeGyroBox(wrapper);
+	
+	renderer.render( scene, camera );
+}
+
+// set visibility of ground plane for shadow 
+// create ground plane first time this is called
+function setGroundPlaneVis (vis) {
+    if (!ground && vis) {
+        ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 1000, 1000 ),
+                    new THREE.MeshPhongMaterial( { color: 0xb0baa5, depthWrite: false } ) );
+        ground.rotation.x = - Math.PI / 2;
+        ground.position.y = -2;
+        ground.receiveShadow = true;
+        ground.visible = gyroConfig.showGround;
+        scene.add( ground );
+
+        grid = new THREE.GridHelper( 1000, 40, 0x000000, 0x000000 );
+        grid.material.opacity = 0.2;
+        grid.material.transparent = true;
+        grid.position.y = -3;
+        scene.add( grid );
+    }
+    if (ground) {
+        ground.visible = vis;
+        grid.visible = vis;
+    }
+}
+
+// Install OrbitControls if enabled
+function enableOrbitControls (enabled) {   
+    if (!controls && enabled) {
+        controls = add3js(new THREE.OrbitControls( camera, renderer.domElement ));
+		controls.addEventListener( 'change', redrawGyro);
+    }
+    if (controls) {
+        controls.enabled = enabled;
+    }
+}
+
+// Create simple gyro box
+function makeGyroBox (wrapper) {
+    if (!box) {
+        var geometry = add3js(new THREE.BoxGeometry( 2, 4, 1 ));
+        var material = add3js(new THREE.MeshLambertMaterial( { color: 0x00d8dd } ));
+        box = add3js(new THREE.Mesh( geometry, material ));
+        box.castShadow = true;
+        wrapper.add( box );
+    }
+    if (box) {
+        box.visible = true;
+    }
+}
+
+// *********************************************************************************
+// UTILITY FUNCTIONS
+   
+function cleanupGyro () {
+	cancelAnimationFrame(animator);
+	threeJsObjects.forEach(function(obj) {
+		if (obj.dispose) {
+			obj.dispose();
+		}
+	});
+	threeJsObjects = [];
+}
+
+function redrawGyro () {
+	renderer.render( scene, camera );
+}
+
+function updateGyroPos () {
+	animator = undefined;
+	
+    if (!box) return;
+    
+    box.rotation.x += Math.PI * gyroConfig.pitch / 180;
+    box.rotation.y += Math.PI * gyroConfig.roll / 180;
+    box.rotation.z += Math.PI * gyroConfig.yaw / 180;
+	
+	// if anything changed, render object
+    redrawGyro();
+
+    // schedule next transition
+    animator = requestAnimationFrame(updateGyroPos);
+
+};
+
+function convertToBoolean (value) {
+	if (typeof value === 'boolean') return value;
+	return value && value !== 'false' ? true : false;
+}
+
+var updatePending;
+
+// Apply single variable to the object
+function applyVarToGyro (name, value) {
+	trace('... set prop ' + name + ' to ' + JSON.stringify(value));
+	if (value && value.isDataTable) value = rtv.dac.tableToScalar(value);
+	var redraw, updatePos;
+	switch (name) {
+		case 'bgColor':
+			scene.background = add3js(new THREE.Color( value ));
+			redraw = true;
+			break;
+
+        case 'showGround':
+            gyroConfig.showGround = value = convertToBoolean(value);
+            setGroundPlaneVis(value);
+			redraw = true;
+			break;
+        case 'enableControl':
+            gyroConfig.enableControl = value = convertToBoolean(value);
+            enableOrbitControls(value);
+			break;
+            
+		case 'yaw':
+            gyroConfig.yaw = value;
+			updatePos = true;
+			break;
+		case 'pitch':
+            gyroConfig.pitch = value;
+			updatePos = true;
+			break;
+		case 'roll':
+            gyroConfig.roll = value;
+			updatePos = true;
+			break;
+            
+		default:
+			break;
+	}
+	
+	// schedule update
+	if (updatePos && !updatePending && !animator) {
+        updatePending = true;
+		setTimeout(function() {
+			updateGyroPos();
+			updatePending = false;
+		}, 100);
+	}
+	if (redraw) {
+		redrawGyro();
+	}
+}
+
+// Apply all the variables to the object
+function applyVarsToGyro(rtvPanel) {
+	if (gyroCanvas !== undefined) {
+		Object.keys(gyroConfig).forEach(function(key){
+			applyVarToGyro(key, rtvPanel.getVarValue(key));
+		});
+		//console.log("vars applied to r-gyro");
+	} else {
+		console.log("apply vars - myGyro not defined");
+	}
+}
+
+// Resize the object to fit panel
+function resizeGyroToFit () {
+	resizeTimerID = undefined;
+	var dims = getDimsForCanvas();
+	var width = dims.width
+	var height = dims.height;
+	
+	if (gyroCanvas && width > 0 && height > 0) {
+		gyroCanvas.setAttribute('data-width', width);
+		gyroCanvas.setAttribute('data-height', height);
+		camera.aspect = width / height;
+		camera.updateProjectionMatrix();
+		renderer.setSize( width, height );
+	}	
+}
+
+// interactive resize callback
+var resizeTimerID;
+rtvPanel.resizedCB = function(dim) {
+	if (!dim) {
+		// initial size, do it immed
+		resizeGyroToFit();
+	} else {
+		// an interactive resize event, do it later in case more are coming
+		if (resizeTimerID) {
+			clearTimeout(resizeTimerID);
+		}
+		resizeTimerID = setTimeout(resizeGyroToFit, 10);
+	}
+};
+
+function addVarListeners () {
 	// add listener for each var, to apply updates
-	Object.keys(gaugeConfig).forEach(function(varName) {
-        let rtvp = rtvPanel;
+	Object.keys(gyroConfig).forEach(function(varName) {
+		let rtvp = rtvPanel;
 		rtvp.addVarListener(varName, 
-			function(value){applyVarToGauge(rtvp.gauge, varName, value)}, true);
+			function(value){applyVarToGyro(varName, value)}, true);
 	});
-    
-	var resizeTimerID;
-	
-	function resizeGaugeToFit () {
-		resizeTimerID = undefined;
-		var width = rtvPanel.container.offsetWidth - 2;
-		var height = rtvPanel.container.offsetHeight - 2;
-		console.log('  ... set panel size = ' + width + ' x ' + height);
-        
-		if (width > 0 && height > 0) {
-			rtvPanel.gauge.setAttribute('data-width', width);
-			rtvPanel.gauge.setAttribute('data-height', height);
-            
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
+}
 
-            renderer.setSize( width, height );
-		}	
-	}
-	
-	rtvPanel.resizedCB = function(dim) {
-        console.log('... in resizeCB');
-		if (!dim) {
-			// initial size, do it immed
-            console.log('  ... in initial rezieCB');
-			resizeGaugeToFit();
-		} else {
-			// an interactive resize event, do it later in case more are coming
-			if (resizeTimerID) {
-				clearTimeout(resizeTimerID);
-			}
-			resizeTimerID = setTimeout(resizeGaugeToFit, 10);
-		}
-	};
-        
-})();
+// Instance the object in RTView
+rtvPanel.setDisplayProperties({
+	localVars: gyroConfig,
+	unloadCB: cleanupGyro
+});
+
+// Initial load of snippet also loads threejs tools and invokes custom code
+rtv.loadScripts(['https://threejs.org/build/three.min.js',
+		'https://threejs.org/examples/js/controls/OrbitControls.js'],
+            function () {
+                makeGyro();                 // create the 3D object
+                applyVarsToGyro(rtvPanel);  // apply initial var values
+                addVarListeners();          // listen for future var changes
+});
  
 </script>
