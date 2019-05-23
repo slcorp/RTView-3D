@@ -1,5 +1,5 @@
 {
-    "modifiedDate": "2019-05-13T03:19:04.827Z",
+    "modifiedDate": "2019-05-23T18:06:43.027Z",
     "viewport": {
         "x": 0,
         "y": 0,
@@ -16,8 +16,9 @@
         "enableControls": "0",
         "pitch": "0",
         "roll": "0",
-        "yaw": "3",
-        "showGround": "1"
+        "showGround": "1",
+        "yaw": "30",
+        "step": "3"
     },
     "styleSheet": {},
     "bgColor": "#ffffff",
@@ -67,11 +68,12 @@
             "bgBorderRadius": 0,
             "dispName": "http://localhost:6565/assets/html/threejs_cube.html",
             "localVars": {
+                "enableControl": true,
                 "pitch": 0,
                 "roll": 0,
-                "yaw": 1,
-                "enableControl": true,
-                "showGround": true
+                "showGround": true,
+                "step": 3,
+                "yaw": 1
             },
             "bindings": {
                 "localVars.pitch": {
@@ -93,13 +95,17 @@
                 "localVars.showGround": {
                     "name": "showGround",
                     "type": "variable"
+                },
+                "localVars.step": {
+                    "name": "step",
+                    "type": "variable"
                 }
             }
         },
         {
             "key": 22,
             "category": "extern-ctrl",
-            "size": "100 30",
+            "size": "100 24",
             "dispName": "input",
             "localVars": {
                 "varToSet": ""
@@ -133,7 +139,7 @@
         {
             "key": -5,
             "category": "extern-ctrl",
-            "size": "100 30",
+            "size": "100 24",
             "dispName": "input",
             "localVars": {
                 "varToSet": ""
@@ -167,7 +173,7 @@
         {
             "key": -7,
             "category": "extern-ctrl",
-            "size": "100 30",
+            "size": "100 24",
             "dispName": "input",
             "localVars": {
                 "varToSet": ""
@@ -204,11 +210,11 @@
             "size": "30 30",
             "dispName": "checkbox",
             "localVars": {
-                "valueToSetChecked": 3,
+                "valueToSetChecked": 30,
                 "valueToSetUnchecked": 0,
                 "varToSet": ""
             },
-            "pos": "160 500",
+            "pos": "160 490",
             "bindings": {
                 "localVars.varToSet": {
                     "name": "yaw",
@@ -218,13 +224,13 @@
         },
         {
             "key": -9,
-            "size": "107.57 24.44",
+            "size": "114.98 24.44",
             "figure": "Rectangle",
             "category": "GeneralText",
             "bgVisible": false,
             "bgBorderVisible": false,
             "labelVisible": true,
-            "labelText": "Set Yaw = 3 deg/s",
+            "labelText": "Set Yaw = 30 deg/s",
             "labelAlignment": {
                 "horizontal": "InsideLeft",
                 "vertical": "Center"
@@ -232,7 +238,7 @@
             "valueVisible": false,
             "labelFont": "normal normal 10pt sans-serif",
             "valueFont": "normal normal 12pt sans-serif",
-            "pos": "170 500"
+            "pos": "170 490"
         },
         {
             "key": -11,
@@ -240,11 +246,11 @@
             "size": "30 30",
             "dispName": "checkbox",
             "localVars": {
-                "valueToSetChecked": 3,
+                "valueToSetChecked": 30,
                 "valueToSetUnchecked": 0,
                 "varToSet": ""
             },
-            "pos": "350 500",
+            "pos": "350 490",
             "bindings": {
                 "localVars.varToSet": {
                     "name": "pitch",
@@ -254,13 +260,13 @@
         },
         {
             "key": -10,
-            "size": "112.26 24.44",
+            "size": "119.68 24.44",
             "figure": "Rectangle",
             "category": "GeneralText",
             "bgVisible": false,
             "bgBorderVisible": false,
             "labelVisible": true,
-            "labelText": "Set Pitch = 3 deg/s",
+            "labelText": "Set Pitch = 30 deg/s",
             "labelAlignment": {
                 "horizontal": "InsideLeft",
                 "vertical": "Center"
@@ -268,7 +274,7 @@
             "valueVisible": false,
             "labelFont": "normal normal 10pt sans-serif",
             "valueFont": "normal normal 12pt sans-serif",
-            "pos": "360 500"
+            "pos": "360 490"
         },
         {
             "key": -13,
@@ -276,11 +282,11 @@
             "size": "30 30",
             "dispName": "checkbox",
             "localVars": {
-                "valueToSetChecked": 3,
+                "valueToSetChecked": 30,
                 "valueToSetUnchecked": 0,
                 "varToSet": ""
             },
-            "pos": "540 500",
+            "pos": "540 490",
             "bindings": {
                 "localVars.varToSet": {
                     "name": "roll",
@@ -290,13 +296,13 @@
         },
         {
             "key": -12,
-            "size": "105.59 24.44",
+            "size": "113.01 24.44",
             "figure": "Rectangle",
             "category": "GeneralText",
             "bgVisible": false,
             "bgBorderVisible": false,
             "labelVisible": true,
-            "labelText": "Set Roll = 3 deg/s",
+            "labelText": "Set Roll = 30 deg/s",
             "labelAlignment": {
                 "horizontal": "InsideLeft",
                 "vertical": "Center"
@@ -304,7 +310,7 @@
             "valueVisible": false,
             "labelFont": "normal normal 10pt sans-serif",
             "valueFont": "normal normal 12pt sans-serif",
-            "pos": "550 500"
+            "pos": "550 490"
         },
         {
             "key": -14,
@@ -396,6 +402,41 @@
                     "type": "variable"
                 }
             }
+        },
+        {
+            "key": -22,
+            "category": "extern-ctrl",
+            "size": "60 24",
+            "dispName": "input",
+            "localVars": {
+                "varToSet": ""
+            },
+            "pos": "660 514",
+            "bindings": {
+                "localVars.varToSet": {
+                    "name": "step",
+                    "type": "variable"
+                }
+            }
+        },
+        {
+            "key": -21,
+            "size": "159.39 21.54",
+            "figure": "Rectangle",
+            "category": "GeneralText",
+            "bgVisible": false,
+            "bgBorderVisible": false,
+            "labelVisible": true,
+            "labelText": "Redraw Step (larger reduces load",
+            "labelAlignment": {
+                "horizontal": "InsideRight",
+                "vertical": "Center"
+            },
+            "valueVisible": false,
+            "labelFont": "normal normal 8pt sans-serif",
+            "valueFont": "normal normal 12pt sans-serif",
+            "pos": "630 514",
+            "labelColor": "#7a7a7a"
         }
     ],
     "linkDataArray": []
