@@ -43,43 +43,26 @@ Choose 'Add File', navigate to the 'assets/html' folder in this github repo,
 Select 'Open' to initiate the upload process. 
 ```
 
-## Import and view the sample displays
+## Import and view the sample displays in RTView Cloud
 
 * In a browser, go to [RTView Cloud](http://rtviewcloud.sl.com/).
 
-* Define a connection to the RTView DataServer running on your local system:
-```
-On the RTView Cloud top menu bar, select Data.
-Select the Add RTView Server button.
-In the Add RTView Server dialog enter:
-
-	Name:       SIMPLE-EXAMPLE-SERVER
-	Host/URL:   http://localhost:3270/rtvquery
-
-Click on Save Added Servers.
-```
-* Test that the connection is successful:
-```
-Click on the green magnifying glass icon next to the SIMPLE-EXAMPLE-SERVER entry.
-This will invoke the RTView DataServer - Cache Tables dialog.
-Verify that you see "Connected" under Connection Status. 
-Verify that you see SensorData in the CacheTable.
-Close the dialog.
-```
-* Import the sample display:
+* Import the sample displays:
 ```
 On the RTView Cloud top menu bar, click on Design to invoke the RTDraw visual editing tool.
 Select the File dropdown menu and click on Import.
 Select "as Private". 
-In the file browser, navigate to the RTView-JavaSccript directory within this project on your computer.
-Select the SimpleExample.json and click Open.
+In the file browser, navigate to the *displays* directory within this project.
+Select one or more of the sample display .json files and click Open.
 ```
 * View or edit the sample display:
 ```
 Select the File dropdown menu and click on Open...
-Double click the name of the display you just imported, to open and view it in real-time.
+Double click the name of a display to open and view it in real-time.
 ```
-This sample display is configured to connect to your local RTView data server and present data changing in real-time.
+This sample display is configured to reference a copy of the threejs html snippets from localhost.
+Simply select the threejs instance object and in the property sheet to the right, find the 'Source' property. Paste in the URL of the threejs html snippet you uploaded to make it active. Once loaded you can experiment with the variables that are surfaced to control various aspects of the threejs model. 
+
 You can experiment with the editing features of RTDraw to make changes to these displays or create your own.
 
 ## Achieved Goals
