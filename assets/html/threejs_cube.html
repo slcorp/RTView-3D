@@ -1,5 +1,7 @@
 <!--- RTView HTML Snippet: ThreeJS Cube Example -->
 
+<! It's not really a cube, it's a parallelepiped, but who's gonna know how to spell that ? --> 
+
 <div data-rtvid="theCanvas">
 <canvas id="theRealCanvas" data-height="480" data-width="480"></canvas>
 </div>
@@ -13,15 +15,17 @@ var ground, grid, controls;
 
 // Instance variables exposed to user
 var cubeConfig = {
-	bgColor: '#eeeeee',   
-	yaw: 1,
+	bgColor: '#eeeeee',
+	yaw: 0,                 // degrees / sec
 	pitch: 0,
 	roll: 0,   
 	showGround: true,
 	enableControl: false,
-	step: 3
+	step: 3                 // step = how many steps to skip before redraw to reduce cpu
 };
 const verbose = false;
+
+const FRAMES_PER_SEC = 30;    // assumption
 
 // log
 function trace (msg) {
@@ -169,9 +173,9 @@ function updateCubePos () {
 		return;
 	}
 	var s = cubeConfig.step;
-	box.rotation.x += Math.PI * p * s / 180;
-	box.rotation.y += Math.PI * r * s / 180;
-	box.rotation.z += Math.PI * y * s / 180;
+	box.rotation.x += Math.PI * p * s / (180 * FRAMES_PER_SEC);
+	box.rotation.y += Math.PI * r * s / (180 * FRAMES_PER_SEC);
+	box.rotation.z += Math.PI * y * s / (180 * FRAMES_PER_SEC);
 
 	redrawCube();
 };
