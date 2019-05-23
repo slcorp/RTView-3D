@@ -65,7 +65,7 @@
             "bgBorderColor": "#cccccc",
             "bgBorderWidth": 1,
             "bgBorderRadius": 0,
-            "dispName": "http://localhost:6565/assets/html/threejs_cube2.html",
+            "dispName": "http://localhost:6565/assets/html/threejs_cube.html",
             "localVars": {
                 "pitch": 0,
                 "roll": 0,
