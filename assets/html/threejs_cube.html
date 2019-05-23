@@ -7,19 +7,19 @@
 <script>
 
 // js vars used by functions within this scope
-var gyroCanvas, scene, camera, renderer, animator;
+var cubeCanvas, scene, camera, renderer, animator;
 var wrapper, box;
 var ground, grid, controls;
 
 // Instance variables exposed to user
-var gyroConfig = {
+var cubeConfig = {
 	bgColor: '#eeeeee',   
 	yaw: 1,
 	pitch: 0,
 	roll: 0,   
 	showGround: true,
 	enableControl: false,
-	step: 4
+	step: 3
 };
 const verbose = false;
 
@@ -37,13 +37,13 @@ function getDimsForCanvas () {
 	}
 }
 
-// make the 3js gyro object 
-function makeGyro () {
+// make the 3js cube object 
+function makeCube () {
 
-	gyroCanvas = rtvPanel.getElementByRtvId('theCanvas');
+	cubeCanvas = rtvPanel.getElementByRtvId('theCanvas');
 	
 	scene = new THREE.Scene();
-	scene.background = new THREE.Color(gyroConfig.bgColor);
+	scene.background = new THREE.Color(cubeConfig.bgColor);
 	
 	var dims = getDimsForCanvas();
 	camera = new THREE.PerspectiveCamera(75, dims.width / dims.height, 0.1, 1000);
@@ -73,16 +73,16 @@ function makeGyro () {
 	scene.add(light2);
 	
 	// create renderer with correct dimensions and attach to canvas
-	renderer = new THREE.WebGLRenderer({ canvas: gyroCanvas.children[0] });
+	renderer = new THREE.WebGLRenderer({ canvas: cubeCanvas.children[0] });
 	renderer.setSize(dims.width, dims.height); 
 	renderer.shadowMap.enabled = true;	
-	gyroCanvas.appendChild(renderer.domElement);
+	cubeCanvas.appendChild(renderer.domElement);
 	
 	// install Orbit Controls if enabled
-	enableOrbitControls(gyroConfig.enableControl);
+	enableOrbitControls(cubeConfig.enableControl);
 
 	// ground plane for shadow if visible
-	setGroundPlaneVis(gyroConfig.showGround);
+	setGroundPlaneVis(cubeConfig.showGround);
 	
 	wrapper = new THREE.Object3D();
 	wrapper.rotation.x = -(Math.PI / 2);
@@ -92,8 +92,8 @@ function makeGyro () {
 	var axesHelper = new THREE.AxesHelper(5);
 	wrapper.add(axesHelper);
 	   
-	// Create the gyro 'box'
-	makeGyroBox(wrapper);
+	// Create the cube 'box'
+	makeCubeBox(wrapper);
 	
 	startAnimation();
 }
@@ -107,7 +107,7 @@ function setGroundPlaneVis (vis) {
 		ground.rotation.x = - Math.PI / 2;
 		ground.position.y = -2;
 		ground.receiveShadow = true;
-		ground.visible = gyroConfig.showGround;
+		ground.visible = cubeConfig.showGround;
 		scene.add(ground);
 
 		grid = new THREE.GridHelper(1000, 40, 0x000000, 0x000000);
@@ -126,15 +126,15 @@ function setGroundPlaneVis (vis) {
 function enableOrbitControls (enabled) {   
 	if (!controls && enabled) {
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
-		controls.addEventListener('change', redrawGyro);
+		controls.addEventListener('change', redrawCube);
 	}
 	if (controls) {
 		controls.enabled = enabled;
 	}
 }
 
-// Create simple gyro box
-function makeGyroBox (wrapper) {
+// Create simple cube box
+function makeCubeBox (wrapper) {
 	if (!box) {
 		var geometry = new THREE.BoxGeometry(2, 4, 1);
 		var material = new THREE.MeshLambertMaterial({ color: 0x00d8dd });
@@ -150,30 +150,30 @@ function makeGyroBox (wrapper) {
 // *********************************************************************************
 // UTILITY FUNCTIONS
    
-function cleanupGyro () {
+function cleanupCube () {
 	stopAnimation();
 	delete rtvPanel.resizedCB;
 }
 
-function redrawGyro () {
+function redrawCube () {
 	renderer.render(scene, camera);
 }
 
-function updateGyroPos () {
+function updateCubePos () {
 	if (!box) return;
 	
-	var p = gyroConfig.pitch;
-	var r = gyroConfig.roll;
-	var y = gyroConfig.yaw;
+	var p = cubeConfig.pitch;
+	var r = cubeConfig.roll;
+	var y = cubeConfig.yaw;
 	if (p === 0 && r === 0 && y === 0) {
 		return;
 	}
-	var s = gyroConfig.step;
+	var s = cubeConfig.step;
 	box.rotation.x += Math.PI * p * s / 180;
 	box.rotation.y += Math.PI * r * s / 180;
 	box.rotation.z += Math.PI * y * s / 180;
 
-	redrawGyro();
+	redrawCube();
 };
 
 var stepCounter = 0;
@@ -181,8 +181,8 @@ var stepCounter = 0;
 function startAnimation () {
 	if (!animator) {
 		 animator = requestAnimationFrame(function() {
-			if (stepCounter++ % gyroConfig.step === 0) {
-				updateGyroPos();
+			if (stepCounter++ % cubeConfig.step === 0) {
+				updateCubePos();
 			}
 			animator = null;
 			startAnimation();
@@ -203,7 +203,7 @@ function convertToBoolean (value) {
 }
 
 // Apply single variable to the object
-function applyVarToGyro (name, value) {
+function applyVarToCube (name, value) {
 	trace('... set prop ' + name + ' to ' + JSON.stringify(value));
 	if (value && value.isDataTable) value = rtv.dac.tableToScalar(value);
 	switch (name) {
@@ -211,51 +211,51 @@ function applyVarToGyro (name, value) {
 			scene.background = new THREE.Color(value);
 			break;
 		case 'showGround':
-			gyroConfig.showGround = value = convertToBoolean(value);
+			cubeConfig.showGround = value = convertToBoolean(value);
 			setGroundPlaneVis(value);
 			break;
 		case 'enableControl':
-			gyroConfig.enableControl = value = convertToBoolean(value);
+			cubeConfig.enableControl = value = convertToBoolean(value);
 			enableOrbitControls(value);
 			break;  
 		case 'yaw':
-			gyroConfig.yaw = value;
+			cubeConfig.yaw = value;
 			break;
 		case 'pitch':
-			gyroConfig.pitch = value;
+			cubeConfig.pitch = value;
 			break;
 		case 'roll':
-			gyroConfig.roll = value;
+			cubeConfig.roll = value;
 			break;
 		case 'step':
-			gyroConfig.step = Math.max(1, value);
+			cubeConfig.step = Math.max(1, value);
 			break;			
 		default:
 			break;
 	}
-	redrawGyro();
+	redrawCube();
 }
 
 // Apply all the variables to the object
-function applyVarsToGyro(rtvPanel) {
-	if (gyroCanvas !== undefined) {
-		Object.keys(gyroConfig).forEach(function(key){
-			applyVarToGyro(key, rtvPanel.getVarValue(key));
+function applyVarsToCube(rtvPanel) {
+	if (cubeCanvas !== undefined) {
+		Object.keys(cubeConfig).forEach(function(key){
+			applyVarToCube(key, rtvPanel.getVarValue(key));
 		});
 	} else {
-		console.log("apply vars - myGyro not defined");
+		console.log("apply vars - myCube not defined");
 	}
 }
 
 // Resize the object to fit panel
-function resizeGyroToFit () {
+function resizeCubeToFit () {
 	var dims = getDimsForCanvas();
 	var width = dims.width
 	var height = dims.height;
 	
-	if (gyroCanvas && width > 0 && height > 0) {
-		gyroCanvas.setAttribute('data-width', width);
-		gyroCanvas.setAttribute('data-height', height);
+	if (cubeCanvas && width > 0 && height > 0) {
+		cubeCanvas.setAttribute('data-width', width);
+		cubeCanvas.setAttribute('data-height', height);
 		camera.aspect = width / height;
 		camera.updateProjectionMatrix();
 		renderer.setSize(width, height);
@@ -263,28 +263,28 @@ function resizeGyroToFit () {
 }
 
 // interactive resize callback
-rtvPanel.resizedCB = resizeGyroToFit;
+rtvPanel.resizedCB = resizeCubeToFit;
 
 function addVarListeners () {
 	// add listener for each var, to apply updates
-	Object.keys(gyroConfig).forEach(function(varName) {
+	Object.keys(cubeConfig).forEach(function(varName) {
 		rtvPanel.addVarListener(varName, 
-			function(value){applyVarToGyro(varName, value)}, true);
+			function(value){applyVarToCube(varName, value)}, true);
 	});
 }
 
 // Instance the object in RTView
 rtvPanel.setDisplayProperties({
-	localVars: gyroConfig,
-	unloadCB: cleanupGyro
+	localVars: cubeConfig,
+	unloadCB: cleanupCube
 });
 
 // Initial load of snippet also loads threejs tools and invokes custom code
 rtv.loadScripts(['https://threejs.org/build/three.min.js',
 		'https://threejs.org/examples/js/controls/OrbitControls.js'],
 			function () {
-				makeGyro();				 // create the 3D object
-				applyVarsToGyro(rtvPanel);  // apply initial var values
+				makeCube();				 // create the 3D object
+				applyVarsToCube(rtvPanel);  // apply initial var values
 				addVarListeners();		  // listen for future var changes
 });
  
