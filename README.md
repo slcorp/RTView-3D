@@ -8,7 +8,7 @@ In such applications, it is often most effective to present real-time dynamic da
 
 ![](assets/images/sample-car-3d.png)
 
-**[Three.js](https://threejs.org/)** is widely used 3D Javascript rendering library, specifically designed for use in HTML browser applcations. With it one can create and render complex dynamic 3D models, as well as import models created with tools such as AutoCAD, Blender, Maya, and others. This repository shows how to use Three.js to render models within the context of RTView and manipulate them with real-time data accessed from datasources provided by RTView.
+**[Three.js](https://threejs.org/)** is a widely used 3D Javascript rendering library, specifically designed for use in HTML browser applcations. With it one can create and render complex dynamic 3D models, as well as import models created with tools such as AutoCAD, Blender, Maya, and others. This repository shows how to use Three.js to render models within the context of RTView and manipulate them with real-time data accessed from datasources provided by RTView.
 
 In addition, displays containing 3D representations can be combined with other real-time displays such as charts, tables, diagrams, and more, to create complete dashboard applications for monitoring and controlling complex applications or processes.
 
@@ -40,7 +40,7 @@ Select 'Create Directory' and enter 'html' to create a folder to hold your HTML 
 Select the 'html' folder.
 Choose 'Add File', navigate to the 'assets/html' folder in this github repo,
     and select one or all of the html snippets to upload.
-Select 'Open' to initiate the upload process. 
+Select 'Open' to initiate the upload process.
 ```
 
 ## Import and view the sample displays in RTView Cloud
@@ -61,9 +61,11 @@ Select the File dropdown menu and click on Open...
 Double click the name of a display to open and view it in real-time.
 ```
 This sample display is configured to reference a copy of the threejs html snippets from localhost.
-Simply select the threejs instance object and in the property sheet to the right, find the 'Source' property. Paste in the URL of the threejs html snippet you uploaded to make it active. Once loaded you can experiment with the variables that are surfaced to control various aspects of the threejs model. 
+Simply select the threejs instance object and in the property sheet to the right, find the 'Source' property. Select the threejs html snippet you uploaded and choose OK to make it the one use in the display.
 
-You can experiment with the editing features of RTDraw to make changes to these displays or create your own.
+Select File from the pulldown menu bar and choose Save to save the display you just edited. Select the Preview option (the eyeball icon) in the upper right of RTDraw to put RTDraw into interactive mode. Then you can experiment with the variables that are surfaced to control various aspects of the threejs model.
+
+Select the Preview icon again to return to Edit mode where you can explore other editing features of RTDraw to make changes to these displays or create your own.
 
 ## Achieved Goals
 In this RTView JavaScript you will have achieved the following: 
