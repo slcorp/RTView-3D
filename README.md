@@ -60,17 +60,16 @@ Select one or more of the sample display .json files and click Open.
 Select the File dropdown menu and click on Open...
 Double click the name of a display to open and view it in real-time.
 ```
-This sample display is configured to reference a copy of the threejs html snippets from localhost.
-Simply select the threejs instance object and in the property sheet to the right, find the 'Source' property. Select the threejs html snippet you uploaded and choose OK to make it the one use in the display.
+This sample display is configured to reference a copy of the threejs html snippets from localhost and will need to be changed to reference the one you uploaded.
+Select the HTML instance object in the display and in the property sheet to the right, find the 'Source' property. Select the threejs html snippet you uploaded and choose OK to make it the one used in this display.
 
 Select File from the pulldown menu bar and choose Save to save the display you just edited. Select the Preview option (the eyeball icon) in the upper right of RTDraw to put RTDraw into interactive mode. Then you can experiment with the variables that are surfaced to control various aspects of the threejs model.
 
-Select the Preview icon again to return to Edit mode where you can explore other editing features of RTDraw to make changes to these displays or create your own.
+Select the Preview icon again to return to Edit mode where you can explore other editing features of RTDraw to make changes to these displays or create your own. 
 
 ## Achieved Goals
-In this RTView JavaScript you will have achieved the following: 
-* Seen how easy it is to display user data in graphical and highly configurable displays in the Cloud.
-* Launched the simple node program used to create and send data to RTView.
+In this RTView-3D project you will have achieved the following: 
+* Seen how easy it is to incorporate 3D objects into RTView displays with RTView Cloud and control them interactively.
 * Seen how users are able to view or enhance a sample RTView display or create new displays.
 
 **Feel free to experiment with, modify or enhance this project, and share your experience, comments and suggestions with us. Please fork this repo and submit a pull request for any changes you would like to suggest.**
